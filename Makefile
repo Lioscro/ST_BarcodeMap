@@ -4,8 +4,8 @@ DIR_OBJ := ./obj
 
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
-INCLUDE_DIRS ?=
-LIBRARY_DIRS ?=
+INCLUDE_DIRS ?= /usr/include/hdf5/serial
+LIBRARY_DIRS ?= /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
 
 SRC := $(wildcard ${DIR_SRC}/*.cpp)
 OBJ := $(patsubst %.cpp,${DIR_OBJ}/%.o,$(notdir ${SRC}))
@@ -16,7 +16,7 @@ BIN_TARGET := ${TARGET}
 
 CXX ?= g++
 CXXFLAGS := -std=c++11 -g -O3 -I${DIR_INC} $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir)) ${CXXFLAGS}
-LIBS := -lz -lpthread
+LIBS := -lz -lpthread -lhdf5 -lboost_serialization 
 LD_FLAGS := $(foreach librarydir,$(LIBRARY_DIRS),-L$(librarydir)) $(LIBS) $(LD_FLAGS)
 
 
